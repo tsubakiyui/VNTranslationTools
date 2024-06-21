@@ -633,7 +633,16 @@ namespace VNTextPatch.Shared.Scripts.Ethornell
                 if (specializedReader != null)
                     specializedReader();
                 else
-                    ReadOperands(OperandTemplates[opcode]);
+                {
+                    try{
+                        ReadOperands(OperandTemplates[opcode]);
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        ReadOperands("");
+                    }
+                }
+                    
 
                 if ((opcode == 0x001B || opcode == 0x00F4) && _largestCodeAddressOperandEncountered < (int)_reader.BaseStream.Position - CodeOffset)
                     break;
